@@ -2,12 +2,14 @@
 #include <iostream>
 #include <cstdio>
 using namespace std;
-int n;
-bool areFriends[10][10];
+int n; // number of students
+bool areFriends[10][10]; // Check if they are friends
+
+/*완전 탐색을 이용하여 가능한 모든 경우의 수를 찾는다.*/
 
 int CountPairings(bool taken[10])
 {
-	int firstFree = -1;
+	int firstFree = -1; //Find first false index in array taken
 	for(int i = 0 ; i < n ; ++i)
 	{
 		if(!taken[i]){
@@ -15,15 +17,16 @@ int CountPairings(bool taken[10])
 			break;
 		}
 	}
-	if(firstFree == -1) return 1;
+	if(firstFree == -1) return 1; // When every student is matched
 	int ret = 0;
-
+	//Start from first false index
 	for(int pairWith = firstFree+1 ; pairWith < n ; ++pairWith)
 	{
+		//Find false index and check if they are friends
 		if(!taken[pairWith] && areFriends[firstFree][pairWith])
 		{
 			taken[firstFree] = taken[pairWith] = true;
-			ret += CountPairings(taken);
+			ret += CountPairings(taken); // Recursive
 			taken[firstFree] = taken[pairWith] = false;
 		}
 	}
@@ -50,8 +53,10 @@ int main()
 			
 		}
 		cout << CountPairings(taken) << endl;
+		//areFriends배열을 초기화 하지 않아 오류가 났었음.
 		for(int j = 0 ; j < 10 ; j++)
 			memset(areFriends[j], false, 10);
+		
 	}
 	return 0;
 }
