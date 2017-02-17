@@ -44,21 +44,21 @@ int main()
 	cin >> c;
 	for(int i = 0 ; i < c ; i++)
 	{
+		memset(taken, 0, sizeof(taken));
 		cin >> n >> m;
+			memset(areFriends, 0, sizeof(areFriends));
+/*
+   배열을 초기화하는 과정에서 오류가 발생했었음
+   for(int j=0 ; j < n ; j++)
+   	memset(areFriends[j] , false, sizeof(bool)*10) 
+	이 코드는 틀린 코드
+ */
 		for(int j = 0 ; j < m ; j++)
 		{
 			cin >> a >> b;
-			if(a > b)
-				areFriends[b][a] = true;
-			else
-				areFriends[a][b] = true;
-			
+			areFriends[a][b] = areFriends[b][a] = true;
 		}
 		cout << CountPairings(taken) << endl;
-		//areFriends배열을 초기화 하지 않아 오류가 났었음.
-		for(int j = 0 ; j < 10 ; j++)
-			memset(areFriends[j], false, 10);
-		
 	}
 	return 0;
 }
